@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Android Developer Portfolio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary-bg: #0f0f0f;
+            --secondary-bg: #1a1a1a;
+            --accent-bg: #2a2a2a;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+            --text-muted: #666666;
+            --accent-color: #00ff88;
+            --accent-hover: #00cc6a;
+            --border-color: #333333;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --shadow-hover: 0 12px 48px rgba(0, 0, 0, 0.4);
+            --gradient-primary: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+            --gradient-secondary: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            --header-bg: rgba(15, 15, 15, 0.95);
+            --header-scrolled-bg: rgba(15, 15, 15, 0.98);
+        }
+
+        [data-theme="light"] {
+            --primary-bg: #ffffff;
+            --secondary-bg: #f8f9fa;
+            --accent-bg: #f1f3f4;
+            --text-primary: #1a1a1a;
+            --text-secondary: #4a4a4a;
+            --text-muted: #888888;
+            --accent-color: #00b56a;
+            --accent-hover: #009c5a;
+            --border-color: #e1e5e9;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 12px 48px rgba(0, 0, 0, 0.15);
+            --gradient-primary: linear-gradient(135deg, #00b56a 0%, #009c5a 100%);
+            --gradient-secondary: linear-gradient(135deg, #f8f9fa 0%, #f1f3f4 100%);
+            --header-bg: rgba(255, 255, 255, 0.95);
+            --header-scrolled-bg: rgba(255, 255, 255, 0.98);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: all 0.3s ease;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--header-bg);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: background-color 0.3s ease;
+            height: 80px;
+        }
+
+        header.header-scrolled {
+            background: var(--header-scrolled-bg);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 2px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--accent-color);
+            transform: scale(1.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(0, 255, 136, 0.1) 0%, transparent 50%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            position: relative;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Projects Section */
+        .projects {
+            padding: 6rem 0;
+            background: var(--secondary-bg);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .projects-grid {
+            display: grid;
+            gap: 4rem;
+        }
+
+        .project-card {
+            background: var(--accent-bg);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .project-info {
+            padding: 2rem;
+        }
+
+        .project-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .tech-tag {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .project-link:hover {
+            color: var(--accent-hover);
+            transform: translateX(5px);
+        }
+
+        /* Image Gallery */
+        .image-gallery {
+            padding: 2rem;
+            background: var(--primary-bg);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            aspect-ratio: 9 / 16; 
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--primary-bg);
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .footer-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-text {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: var(--accent-bg);
+            border-radius: 50%;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .social-link:hover {
+            background: var(--gradient-primary);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .footer-bottom {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        /* Image Viewer Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.modal-active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 85%;
+            max-height: 85%;
+            animation: zoomIn 0.3s ease;
+        }
+        
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .close-modal:hover,
+        .close-modal:focus {
+            color: #bbb;
+            text-decoration: none;
+        }
+        
+        /* Modal Navigation Arrows */
+        .modal-nav {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -50px;
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+            transition: 0.3s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            background-color: rgba(0,0,0,0.3);
+        }
+
+        .modal-nav.next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .modal-nav.prev {
+            left: 0;
+        }
+
+        .modal-nav:hover {
+            background-color: rgba(0,0,0,0.6);
+        }
+
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .nav-links {
+                background: var(--primary-bg);
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .project-info {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Selection */
+        ::selection {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--secondary-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-color);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-hover);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">AndroidDev</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><button class="theme-toggle" id="themeToggle">🌙</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <h1 class="hero-title">Android Developer</h1>
+                <p class="hero-subtitle">Crafting Modern Mobile Experiences</p>
+                <p class="hero-description">
+                    Passionate about building innovative Android applications that solve real-world problems. 
+                    Specializing in modern development practices, clean architecture, and user-centered design.
+                </p>
+                <a href="#projects" class="cta-button">
+                    View My Work
+                    <span>→</span>
+                </a>
+            </div>
+        </section>
+
+        <section class="projects" id="projects">
+            <div class="container">
+                <h2 class="section-title">Featured Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-info">
+                            <h3 class="project-title">DxRetail</h3>
+                            <p class="project-description">
+                                A comprehensive retail management application that revolutionizes the way businesses handle inventory, sales, and customer relationships. Built with modern Android architecture patterns, DxRetail provides real-time analytics, seamless POS integration, and powerful inventory tracking capabilities.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Kotlin</span>
+                                <span class="tech-tag">MVVM</span>
+                                <span class="tech-tag">Room Database</span>
+                                <span class="tech-tag">Retrofit</span>
+                                <span class="tech-tag">Jetpack Compose</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link"><span>📱</span> Live Demo</a>
+                                <a href="#" class="project-link"><span>🔗</span> GitHub</a>
+                            </div>
+                        </div>
+                        <div class="image-gallery">
+                            <div class="gallery-grid">
+                                <div class="gallery-item"><img src="Retail_Pics/1.png" alt="Project Image 1"></div>
+                                <div class="gallery-item"><img src="Retail_Pics/2.png" alt="Project Image 2"></div>
+                                <div class="gallery-item"><img src="Retail_Pics/3.png" alt="Project Image 3"></div>
+                                <div class="gallery-item"><img src="Retail_Pics/4.png" alt="Project Image 4"></div>
+                                <div class="gallery-item"><img src="Retail_Pics/5.png" alt="Project Image 5"></div>
+                                <div class="gallery-item"><img src="Retail_Pics/6.png" alt="Project Image 6"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-info">
+                            <h3 class="project-title">Sd Admin Panel</h3>
+                            <p class="project-description">
+                                A sophisticated administrative dashboard application designed for system administrators and managers. Features include user management, analytics visualization, system monitoring, and comprehensive reporting tools. Built with a focus on security, scalability, and intuitive user experience.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Kotlin</span>
+                                <span class="tech-tag">Material Design</span>
+                                <span class="tech-tag">Firebase</span>
+                                <span class="tech-tag">Charts Library</span>
+                                <span class="tech-tag">Coroutines</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link"><span>📱</span> Live Demo</a>
+                                <a href="#" class="project-link"><span>🔗</span> GitHub</a>
+                            </div>
+                        </div>
+                        <div class="image-gallery">
+                            <div class="gallery-grid">
+                                 <div class="gallery-item"><img src="SmartCrm_Pics/1.jpg" alt="Admin Panel Image 1"></div>
+                                 <div class="gallery-item"><img src="SmartCrm_Pics/2.jpg" alt="Admin Panel Image 2"></div>
+                                 <div class="gallery-item"><img src="SmartCrm_Pics/3.jpg" alt="Admin Panel Image 3"></div>
+                                 <div class="gallery-item"><img src="SmartCrm_Pics/4.jpg" alt="Admin Panel Image 4"></div>
+                                 <div class="gallery-item"><img src="SmartCrm_Pics/5.jpg" alt="Admin Panel Image 5"></div>
+                                 <div class="gallery-item"><img src="SmartCrm_Pics/6.jpg" alt="Admin Panel Image 6"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-info">
+                            <h3 class="project-title">SmartCrm</h3>
+                            <p class="project-description">
+                                An intelligent Customer Relationship Management system that helps businesses streamline their sales process, track customer interactions, and boost productivity. Features AI-powered insights, automated workflows, contact management, and comprehensive sales analytics.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Kotlin</span>
+                                <span class="tech-tag">Clean Architecture</span>
+                                <span class="tech-tag">Dagger Hilt</span>
+                                <span class="tech-tag">REST API</span>
+                                <span class="tech-tag">ML Kit</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link"><span>📱</span> Live Demo</a>
+                                <a href="#" class="project-link"><span>🔗</span> GitHub</a>
+                            </div>
+                        </div>
+                        <div class="image-gallery">
+                            <div class="gallery-grid">
+                                 <div class="gallery-item"><img src="SmartCrm_Pics/1.jpg" alt="Admin Panel Image 1"></div>
+                                 <div class="gallery-item"><img src="SmartCrm_Pics/2.jpg" alt="Admin Panel Image 2"></div>
+                                 <div class="gallery-item"><img src="SmartCrm_Pics/3.jpg" alt="Admin Panel Image 3"></div>
+                                 <div class="gallery-item"><img src="SmartCrm_Pics/4.jpg" alt="Admin Panel Image 4"></div>
+                                 <div class="gallery-item"><img src="SmartCrm_Pics/5.jpg" alt="Admin Panel Image 5"></div>
+                                 <div class="gallery-item"><img src="SmartCrm_Pics/6.jpg" alt="Admin Panel Image 6"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer id="contact">
+            <div class="container">
+                <div class="footer-content">
+                    <h2 class="footer-title">Let's Connect</h2>
+                    <p class="footer-text">
+                        Ready to collaborate on your next Android project? 
+                        Let's build something amazing together.
+                    </p>
+                    <div class="social-links">
+                        <a href="mailto:dany.ahsan.007@gmail.com" class="social-link" title="Email">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                        </a>
+                        <a href="https://github.com/DanyAhsan" class="social-link" title="GitHub" target="_blank" rel="noopener noreferrer">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.linkedin.com/in/muhammad-danyal-ahsan-8777b61a3/" class="social-link" title="LinkedIn" target="_blank" rel="noopener noreferrer">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                                <rect x="2" y="9" width="4" height="12"></rect>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="footer-bottom">
+                        <p>&copy; 2025 Android Developer Portfolio. Crafted with passion.</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+    
+    <div id="image-modal" class="modal">
+        <span id="close-modal-btn" class="close-modal">&times;</span>
+        <img id="modal-image" class="modal-content">
+        <a id="prev-btn" class="modal-nav prev">&#10094;</a>
+        <a id="next-btn" class="modal-nav next">&#10095;</a>
+    </div>
+
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        body.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+        function updateThemeIcon(theme) {
+            themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // REVISED: Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('header-scrolled');
+            } else {
+                header.classList.remove('header-scrolled');
+            }
+        });
+
+        // Intersection Observer for card animations
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'all 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Enhanced mobile menu functionality
+        function createMobileMenu() {
+            const nav = document.querySelector('nav');
+            const navLinks = document.querySelector('.nav-links');
+            const mobileMenuBtn = document.createElement('button');
+            mobileMenuBtn.className = 'mobile-menu-btn';
+            mobileMenuBtn.innerHTML = '☰';
+            mobileMenuBtn.style.cssText = 'display: none; background: none; border: none; color: var(--text-primary); font-size: 1.5rem; cursor: pointer; padding: 0.5rem;';
+            nav.appendChild(mobileMenuBtn);
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinks.classList.toggle('mobile-active');
+                mobileMenuBtn.innerHTML = navLinks.classList.contains('mobile-active') ? '✕' : '☰';
+            });
+            navLinks.addEventListener('click', (e) => {
+                if (e.target.tagName === 'A') {
+                    navLinks.classList.remove('mobile-active');
+                    mobileMenuBtn.innerHTML = '☰';
+                }
+            });
+        }
+        const mobileStyles = document.createElement('style');
+        mobileStyles.textContent = `
+            @media (max-width: 768px) {
+                .mobile-menu-btn { display: block !important; }
+                .nav-links {
+                    position: fixed; top: 80px; left: -100%; width: 100%;
+                    height: calc(100vh - 80px); background: var(--primary-bg);
+                    flex-direction: column; justify-content: flex-start;
+                    align-items: center; padding-top: 2rem;
+                    transition: left 0.3s ease; border-top: 1px solid var(--border-color);
+                }
+                .nav-links.mobile-active { left: 0; display: flex !important; }
+                .nav-links li { margin: 1rem 0; }
+                .nav-links a { font-size: 1.2rem; padding: 1rem 2rem; display: block; width: 100%; text-align: center; }
+            }
+        `;
+        document.head.appendChild(mobileStyles);
+        createMobileMenu();
+        
+        // Image Modal Functionality with Navigation
+        const modal = document.getElementById('image-modal');
+        const modalImg = document.getElementById('modal-image');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        let currentImageList = [];
+        let currentImageIndex = 0;
+        const openModal = (images, index) => {
+            currentImageList = images;
+            currentImageIndex = index;
+            modalImg.src = currentImageList[currentImageIndex];
+            modal.classList.add('modal-active');
+        };
+        const closeModal = () => {
+            modal.classList.remove('modal-active');
+        };
+        const showNextImage = () => {
+            currentImageIndex = (currentImageIndex + 1) % currentImageList.length;
+            modalImg.src = currentImageList[currentImageIndex];
+        };
+        const showPrevImage = () => {
+            currentImageIndex = (currentImageIndex - 1 + currentImageList.length) % currentImageList.length;
+            modalImg.src = currentImageList[currentImageIndex];
+        };
+        document.querySelectorAll('.gallery-grid').forEach(grid => {
+            const images = Array.from(grid.querySelectorAll('img'));
+            const imageSources = images.map(img => img.src);
+            images.forEach((img, index) => {
+                img.addEventListener('click', () => {
+                    openModal(imageSources, index);
+                });
+            });
+        });
+        closeModalBtn.addEventListener('click', closeModal);
+        nextBtn.addEventListener('click', showNextImage);
+        prevBtn.addEventListener('click', showPrevImage);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (modal.classList.contains('modal-active')) {
+                if (e.key === 'Escape') closeModal();
+                else if (e.key === 'ArrowRight') showNextImage();
+                else if (e.key === 'ArrowLeft') showPrevImage();
+            }
+        });
+
+        // == NEW: Particle Animation for Hero Section ==
+        function createParticle() {
+            const hero = document.querySelector('.hero');
+            if (!hero) return; // Exit if hero section not found
+
+            const particle = document.createElement('div');
+            particle.style.position = 'absolute';
+            particle.style.width = `${Math.random() * 3 + 2}px`;
+            particle.style.height = particle.style.width;
+            particle.style.background = 'var(--accent-color)';
+            particle.style.borderRadius = '50%';
+            particle.style.opacity = (Math.random() * 0.5 + 0.3).toFixed(2);
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.bottom = '0';
+            particle.style.pointerEvents = 'none';
+            particle.style.animation = `floatUp ${Math.random() * 8 + 5}s linear forwards`;
+            
+            hero.appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 13000); // Remove after animation + buffer
+        }
+
+        const particleAnimationStyle = document.createElement('style');
+        particleAnimationStyle.textContent = `
+            @keyframes floatUp {
+                to {
+                    transform: translateY(-100vh) rotate(${Math.random() * 720 - 360}deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(particleAnimationStyle);
+        setInterval(createParticle, 500); // Create a new particle every 500ms
+        
+        console.log('🚀 Android Portfolio loaded successfully!');
+    </script>
+</body>
+</html>
